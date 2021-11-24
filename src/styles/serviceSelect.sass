@@ -1,0 +1,25 @@
+.services-wrapper
+    display: flex
+    gap: 2rem
+    justify-content: center
+
+    .service-card
+        border-radius: 4px
+        width: 300px
+        padding: 0 2rem
+        @include magic-border(3px, $primaryColor, 0.2s, 1)
+
+        & > *
+            margin: 0
+            padding: 0
+
+        .logo-container
+            display: grid
+            place-items: center
+            height: 200px
+
+        .logo
+            width: 100%
+
+            svg path
+                fill: red

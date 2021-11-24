@@ -1,12 +1,12 @@
+import Header from "./components/Header";
+import Home from "./pages/Home";
 import "./styles/index.sass";
 
 function App() {
     return (
         <div className='App'>
-            <div className='wrapper'>
-                <h1>Movie Tinder</h1>
-                <hr />
-            </div>
+            <Header />
+            <Home />
         </div>
     );
 }
