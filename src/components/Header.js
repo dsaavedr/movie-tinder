@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
-    const logo = null || <span>Logo</span>;
+    const logo = null || <Link to='/'>Logo</Link>;
 
     return (
-        <header className='menu'>
+        <nav className='menu'>
             {/* 1. Left menu */}
             <ul>
                 <li className='menu__item'>Item 1</li>
@@ -18,8 +19,10 @@ export default function Header() {
             {/* 3. Right menu */}
             <ul>
                 <li className='menu__item'>Item 1</li>
-                <li className='menu__item'>Item 2</li>
+                <li className='menu__item'>
+                    <Link to='login'>Login</Link>
+                </li>
             </ul>
-        </header>
+        </nav>
     );
 }
