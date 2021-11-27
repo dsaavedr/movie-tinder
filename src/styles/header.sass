@@ -1,9 +1,12 @@
 .menu
-    background: $mainWhite
-    color: $mainBlack
     display: flex
     justify-content: space-between
-    padding: 2rem 3rem
+    padding: 2rem 0
+    max-width: 1200px
+    margin: 0 auto
+
+    @media (max-width: calc($bp-xlarge + 100px))
+        padding: 2rem 3rem
 
     ul
         display: flex
@@ -18,6 +21,7 @@
         list-style-type: none
 
         &:nth-of-type(2)
+            justify-content: end
 
     .logo
         margin: 0 4rem
