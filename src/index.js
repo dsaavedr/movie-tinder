@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Error404 from "./pages/404";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -14,8 +15,9 @@ ReactDOM.render(
             <Routes>
                 <Route path='/' element={<App />}>
                     <Route path='/' element={<Home />} />
-                    <Route path='/login' element={<Login />} />
+                    <Route path='*' element={<Error404 />} />
                 </Route>
+                <Route path='/login' element={<Login />} />
             </Routes>
         </BrowserRouter>
     </React.StrictMode>,
