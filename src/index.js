@@ -4,6 +4,9 @@ import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import "./styles/bootstrap-grid.min.css";
+import "./styles/index.sass";
+
 import App from "./App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
