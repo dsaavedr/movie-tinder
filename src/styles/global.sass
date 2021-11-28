@@ -14,11 +14,24 @@ body
 #root
     min-height: 100vh
 
+// Reset elements
+
+input
+    &, &:hover, &:focus, &:active, &:focus-visible
+        border: initial
+        outline: initial
+        color: inherit
+
+button
+    border: none
+    color: inherit
+    outline: none
+
 a
     text-decoration: none
 
-    &:visited, &:focus
-        color: initial
+    &, &:visited, &:focus
+        color: inherit
 
 @include hide("s", $bp-small)
 @include hide("md", $bp-medium)
