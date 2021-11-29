@@ -73,19 +73,15 @@ const signInWithPassword = async (email, password) => {
 };
 
 const registerWithPassword = async (name, email, password) => {
-    try {
-        const res = await createUserWithEmailAndPassword(auth, email, password);
-        const user = res.user;
-        await db.collection("users").add({
-            uid: user.uid,
-            name,
-            authProvider: "local",
-            email
-        });
-    } catch (err) {
-        console.error(err);
-        alert(err.message);
-    }
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    await db.collection("users").add({
+        uid: user.uid,
+        name,
+        authProvider: "local",
+        email
+    });
+    return res.user;
 };
 
 const sendPasswordResetEmail = async email => {
