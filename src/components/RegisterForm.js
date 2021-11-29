@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function RegisterForm() {
+export default function RecoveryForm() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -8,16 +8,6 @@ export default function RegisterForm() {
     return (
         <div className='login-form'>
             <form>
-                <div className='input-group'>
-                    <label htmlFor='register-name'>Name</label>
-                    <input
-                        type='email'
-                        name='register-name'
-                        id='register-name'
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                    />
-                </div>
                 <div className='input-group'>
                     <label htmlFor='register-email'>Email</label>
                     <input
@@ -29,17 +19,7 @@ export default function RegisterForm() {
                     />
                 </div>
                 <div className='input-group'>
-                    <label htmlFor='register-password'>Password</label>
-                    <input
-                        type='password'
-                        name='register-passowrd'
-                        id='register-password'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                </div>
-                <div className='input-group'>
-                    <button type='submit'>SIGN UP</button>
+                    <button type='submit'>SEND RECOVERY EMAIL</button>
                 </div>
             </form>
         </div>

@@ -32,9 +32,7 @@ export default function LoginForm() {
                     <button type='submit'>CONNECT</button>
                 </div>
                 <div className='input-group extra-options'>
-                    <a href='#' className='recover-password'>
-                        Forgot your password?
-                    </a>
+                    <Link to='/recovery'>Forgot your password?</Link>
                     <span>
                         Don't have an account? <Link to='/register'>Sign up</Link>
                     </span>

@@ -13,6 +13,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Recovery from "./pages/Recovery";
 import Error404 from "./pages/404";
 
 ReactDOM.render(
@@ -25,6 +26,7 @@ ReactDOM.render(
                 </Route>
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='/recovery' element={<Recovery />} />
             </Routes>
         </BrowserRouter>
     </React.StrictMode>,
