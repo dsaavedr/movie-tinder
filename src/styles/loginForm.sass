@@ -8,14 +8,17 @@
             label
                 color: $mainWhite
 
-        &:not(:last-of-type)
-            margin-bottom: 3rem
-
         &:first-of-type
             margin-bottom: 1rem
 
         &:nth-last-of-type(2)
             margin-bottom: 20px
+
+        &.extra-options
+            display: flex
+            justify-content: space-between
+            font-size: 0.7rem
+            gap: 2rem
 
         label
             display: block
@@ -30,6 +33,7 @@
             border-radius: 5px
             padding: 0.5rem 0.5rem
             background: none
+            width: 100%
 
             &:focus, &:active
                 border: 2px solid $primaryColor
@@ -47,3 +51,4 @@
         border-radius: 5px
         cursor: pointer
         color: $mainWhite
+        margin-top: 3rem

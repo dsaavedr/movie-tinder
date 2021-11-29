@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -30,10 +31,13 @@ export default function LoginForm() {
                 <div className='input-group'>
                     <button type='submit'>CONNECT</button>
                 </div>
-                <div className='input-group'>
+                <div className='input-group extra-options'>
                     <a href='#' className='recover-password'>
                         Forgot your password?
                     </a>
+                    <span>
+                        Don't have an account? <Link to='/register'>Sign up</Link>
+                    </span>
                 </div>
             </form>
         </div>
