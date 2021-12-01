@@ -45,11 +45,19 @@
             &:hover
                 color: $mainWhite
 
-    button[type="submit"]
+        &.google
+            button
+                background: none
+
+    button
         background: $primaryColor
         width: 100%
         padding: 1rem
         border-radius: 5px
         cursor: pointer
         color: $mainWhite
-        margin-top: 3rem
+        margin-top: 1rem
+        border: 1px solid $primaryColor
+
+        &[type="submit"]
+            margin-top: 3rem

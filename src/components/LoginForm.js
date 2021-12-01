@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-import { signInWithPassword } from "../firebase";
+import { signInWithPassword, signInWithGoogle } from "../firebase";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -12,6 +12,18 @@ export default function LoginForm() {
         e.preventDefault();
 
         signInWithPassword(email, password)
+            .then(res => {
+                alert("Login successful!");
+                setLoggedIn(true);
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Something went wrong on our end. Please try again.");
+            });
+    };
+
+    const handleSignInWithGoogle = e => {
+        signInWithGoogle()
             .then(res => {
                 alert("Login successful!");
                 setLoggedIn(true);
@@ -48,6 +60,11 @@ export default function LoginForm() {
                 </div>
                 <div className='input-group'>
                     <button type='submit'>CONNECT</button>
+                </div>
+                <div className='input-group google'>
+                    <button type='button' onClick={handleSignInWithGoogle}>
+                        SIGN IN WITH GOOGLE
+                    </button>
                 </div>
                 <div className='input-group extra-options'>
                     <Link to='/recovery'>Forgot your password?</Link>
