@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import { registerWithPassword } from "../firebase";
 
@@ -7,6 +7,7 @@ export default function RegisterForm() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [created, setCreated] = useState(false);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -14,6 +15,7 @@ export default function RegisterForm() {
         registerWithPassword(name, email, password)
             .then(res => {
                 alert("Account successfully created!");
+                setCreated(true);
             })
             .catch(err => {
                 switch (err.code) {
@@ -32,6 +34,7 @@ export default function RegisterForm() {
 
     return (
         <div className='login-form'>
+            {created ? <Navigate to='/' /> : null}
             <form onSubmit={handleSubmit}>
                 <div className='input-group'>
                     <label htmlFor='register-name'>Name</label>
