@@ -1,13 +1,31 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+
+import { signInWithPassword } from "../firebase";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        signInWithPassword(email, password)
+            .then(res => {
+                alert("Login successful!");
+                setLoggedIn(true);
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Something went wrong on our end. Please try again.");
+            });
+    };
 
     return (
         <div className='login-form'>
-            <form>
+            {loggedIn ? <Navigate to='/' /> : null}
+            <form onSubmit={handleSubmit}>
                 <div className='input-group'>
                     <label htmlFor='login-email'>Email</label>
                     <input

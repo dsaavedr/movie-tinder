@@ -8,7 +8,7 @@ import {
     GoogleAuthProvider,
     signInWithPopup
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, addDoc, query, where, getDoc } from "firebase/firestore";
 
 const {
     REACT_APP_API_KEY,
@@ -45,18 +45,20 @@ const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async () => {
     try {
         const res = await signInWithPopup(auth, googleProvider);
-        const user = res.user;
-        const query = await db.collection("users").where("uid", "==", user.uid).get();
-        if (query.docs.length === 0) {
-            await db.collection("users").add({
+        const { user } = res;
+        const usersRef = collection(db, "users");
+        const query = query(usersRef, where("uid", "==", user.uid));
+        const snapshot = await getDoc(query);
+        if (snapshot.length === 0) {
+            await addUserToDb({
                 uid: user.uid,
                 name: user.displayName,
                 authProvider: "google",
                 email: user.email
             });
         }
-        const credential = GoogleAuthProvider.credentialFromResult(res);
-        const token = credential.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(res);
+        // const token = credential.accessToken;
     } catch (err) {
         console.error(err);
         alert(err.message);
@@ -75,12 +77,7 @@ const signInWithPassword = async (email, password) => {
 const registerWithPassword = async (name, email, password) => {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await db.collection("users").add({
-        uid: user.uid,
-        name,
-        authProvider: "local",
-        email
-    });
+    await addUserToDb({ ...user, name });
     return res.user;
 };
 
@@ -101,6 +98,18 @@ const logout = async () => {
         console.error(err);
         alert(err.message);
     }
+};
+
+const addUserToDb = async ({ uid, name, email }) => {
+    const res = await addDoc(collection(db, "users"), {
+        uid,
+        name,
+        authProvider: "local",
+        email,
+        createdOn: new Date().toISOString()
+    });
+
+    return res;
 };
 
 export {

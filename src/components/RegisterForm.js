@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { registerWithPassword } from "../firebase";
 
@@ -22,6 +23,7 @@ export default function RegisterForm() {
                         break;
 
                     default:
+                        console.error(err);
                         alert("Something went wrong on our end. Please try again.");
                         break;
                 }
@@ -64,8 +66,11 @@ export default function RegisterForm() {
                         onChange={e => setPassword(e.target.value)}
                     />
                 </div>
-                <div className='input-group'>
+                <div className='input-group submit'>
                     <button type='submit'>SIGN UP</button>
+                </div>
+                <div className='input-group extra-options'>
+                    <Link to='/login'>Or go back</Link>
                 </div>
             </form>
         </div>
