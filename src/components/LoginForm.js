@@ -1,36 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-import { signInWithPassword, signInWithGoogle } from "../firebase";
+import { signInWithPassword, signInWithGoogle, logout } from "../firebase";
+
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const { currentUser } = useAuth();
+
+    useEffect(() => {
+        setLoggedIn(currentUser !== null);
+    }, []);
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        setLoading(true);
 
         signInWithPassword(email, password)
             .then(res => {
                 alert("Login successful!");
                 setLoggedIn(true);
+                setLoading(false);
             })
             .catch(err => {
                 console.error(err);
                 alert("Something went wrong on our end. Please try again.");
+                setLoading(false);
             });
     };
 
     const handleSignInWithGoogle = e => {
+        setLoading(true);
+
         signInWithGoogle()
             .then(res => {
                 alert("Login successful!");
                 setLoggedIn(true);
+                setLoading(false);
             })
             .catch(err => {
                 console.error(err);
                 alert("Something went wrong on our end. Please try again.");
+                setLoading(false);
             });
     };
 
@@ -59,10 +76,12 @@ export default function LoginForm() {
                     />
                 </div>
                 <div className='input-group'>
-                    <button type='submit'>CONNECT</button>
+                    <button disabled={loading} type='submit'>
+                        CONNECT
+                    </button>
                 </div>
                 <div className='input-group google'>
-                    <button type='button' onClick={handleSignInWithGoogle}>
+                    <button disabled={loading} type='button' onClick={handleSignInWithGoogle}>
                         SIGN IN WITH GOOGLE
                     </button>
                 </div>

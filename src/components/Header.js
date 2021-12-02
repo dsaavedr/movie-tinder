@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-    const logo = null || <Link to='/'>Logo</Link>;
+    const logo = null || "Logo";
 
     return (
         <nav className='menu'>
@@ -13,9 +13,9 @@ export default function Header() {
                 <li className='menu__item'>Item 3</li>
             </ul>
             {/* 2. Logo */}
-            <a href='#' className='logo'>
+            <Link className='logo' to='/'>
                 {logo}
-            </a>
+            </Link>
             {/* 3. Right menu */}
             <ul>
                 <li className='menu__item'>Item 1</li>
