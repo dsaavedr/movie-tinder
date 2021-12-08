@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-import { signInWithPassword, signInWithGoogle, logout } from "../firebase";
+import { signInWithPassword, signInWithGoogle } from "../firebase";
 
 import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const { isLoggedIn, currentUser } = useAuth();
-
-    useEffect(() => {
-        setLoggedIn(currentUser !== null);
-    }, []);
+    const { isLoggedIn: loggedIn } = useAuth();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -25,7 +20,6 @@ export default function LoginForm() {
         signInWithPassword(email, password)
             .then(res => {
                 alert("Login successful!");
-                setLoggedIn(true);
                 setLoading(false);
             })
             .catch(err => {
@@ -41,7 +35,6 @@ export default function LoginForm() {
         signInWithGoogle()
             .then(res => {
                 alert("Login successful!");
-                setLoggedIn(true);
                 setLoading(false);
             })
             .catch(err => {
@@ -53,7 +46,7 @@ export default function LoginForm() {
 
     return (
         <div className='login-form'>
-            {isLoggedIn ? <Navigate to='/' /> : null}
+            {loggedIn ? <Navigate to='/' /> : null}
             <form onSubmit={handleSubmit}>
                 <div className='input-group'>
                     <label htmlFor='login-email'>Email</label>
