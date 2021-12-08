@@ -30,9 +30,6 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
-console.log(JSON.stringify(firebaseConfig, 0, 2));
-console.log(process.env);
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
@@ -44,19 +41,22 @@ const googleProvider = new GoogleAuthProvider();
 
 const signInWithGoogle = async () => {
     const res = await signInWithPopup(auth, googleProvider);
-    console.log(res);
     const { user } = res;
     const usersRef = collection(db, "users");
     const q = query(usersRef, where("uid", "==", user.uid));
     const snapshot = await getDocs(q);
     if (snapshot.length === 0) {
+        const { uid, displayName, email } = user;
+
         await addUserToDb({
-            uid: user.uid,
-            name: user.displayName,
+            uid,
+            displayName,
             authProvider: "google",
-            email: user.email
+            email
         });
     }
+
+    return res;
     // const credential = GoogleAuthProvider.credentialFromResult(res);
     // const token = credential.accessToken;
 };
