@@ -6,15 +6,18 @@ const AuthContext = React.createContext();
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const value = {
-        currentUser
+        currentUser,
+        isLoggedIn
     };
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user);
+            setIsLoggedIn(user === null);
             setLoading(false);
         });
 

@@ -11,7 +11,7 @@ export default function LoginForm() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const { currentUser } = useAuth();
+    const { isLoggedIn, currentUser } = useAuth();
 
     useEffect(() => {
         setLoggedIn(currentUser !== null);
@@ -53,7 +53,7 @@ export default function LoginForm() {
 
     return (
         <div className='login-form'>
-            {loggedIn ? <Navigate to='/' /> : null}
+            {isLoggedIn ? <Navigate to='/' /> : null}
             <form onSubmit={handleSubmit}>
                 <div className='input-group'>
                     <label htmlFor='login-email'>Email</label>
