@@ -26,10 +26,12 @@ ReactDOM.render(
                             <Route path='/' element={<Home />} />
                         </Route>
                     </Route>
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
-                    <Route path='/recovery' element={<Recovery />} />
-                    <Route path='*' element={<Error404 />} />
+                    <Route path='/' element={<UnauthenticatedRoute />}>
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
+                        <Route path='/recovery' element={<Recovery />} />
+                        <Route path='*' element={<Error404 />} />
+                    </Route>
                 </Routes>
             </Router>
         </AuthProvider>
