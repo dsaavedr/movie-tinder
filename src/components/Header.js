@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../contexts/AuthContext";
+
+import { logout } from "../firebase";
+
 export default function Header() {
     const logo = null || "Logo";
+
+    const { isLoggedIn } = useAuth();
 
     return (
         <nav className='menu'>
@@ -20,7 +26,7 @@ export default function Header() {
             <ul>
                 <li className='menu__item'>Item 1</li>
                 <li className='menu__item'>
-                    <Link to='login'>Login</Link>
+                    {!isLoggedIn ? <Link to='/login'>Login</Link> : <a onClick={logout}>Logout</a>}
                 </li>
             </ul>
         </nav>
