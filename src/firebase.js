@@ -8,7 +8,17 @@ import {
     GoogleAuthProvider,
     signInWithPopup
 } from "firebase/auth";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    setDoc,
+    query,
+    where,
+    getDocs,
+    getDoc,
+    doc
+} from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -53,6 +63,7 @@ const signInWithGoogle = async () => {
 
 const signInWithPassword = async (email, password) => {
     try {
+        // Sign user in
         await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
         console.error(err);
@@ -60,11 +71,11 @@ const signInWithPassword = async (email, password) => {
     }
 };
 
-const registerWithPassword = async (name, email, password) => {
+const registerWithPassword = async (displayName, email, password) => {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await addUserToDb({ ...user, name });
-    return res.user;
+    await addUserToDb({ ...user, displayName, docId: res.user.uid });
+    return user;
 };
 
 const sendPasswordResetEmail = async email => {
@@ -86,16 +97,32 @@ const logout = async () => {
     }
 };
 
-const addUserToDb = async ({ uid, name, email }) => {
-    const res = await addDoc(collection(db, "users"), {
+const addUserToDb = async ({ uid, displayName, email, authProvider = "local", docId = null }) => {
+    const payload = {
         uid,
-        name,
-        authProvider: "local",
+        displayName,
+        authProvider,
         email,
         createdOn: new Date().toISOString()
-    });
+    };
+
+    let res;
+
+    if (docId) {
+        res = await setDoc(doc(db, "users", docId), payload);
+    } else {
+        res = await addDoc(collection(db, "users"), payload);
+    }
 
     return res;
+};
+
+const getUser = async uid => {
+    const userSnap = await getDoc(doc(db, "users", uid));
+    if (userSnap.exists()) {
+        console.log("Found user!");
+        return userSnap.data();
+    }
 };
 
 export {
